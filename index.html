@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+ <title>Acme Flow — Application Landing Template</title>
+ <style>
+   :root {
+     --primary: #1793D1;
+     /* Charcoal secondary — rgb(36, 31, 33) */
+     --secondary: #241f21;
+     --secondary-rgb: 36, 31, 33;
+     --bg: #f6f8fb;
+     --surface: #ffffff;
+     --text: var(--secondary);
+     --muted: #667085;
+     --line: #d9e2ec;
+     --shadow: 12px 12px 0 rgba(var(--secondary-rgb), 0.14);
+     --shadow-sm: 8px 8px 0 rgba(var(--secondary-rgb), 0.1);
+     --radius: 18px;
+     --max: 1200px;
+     --section-pad: clamp(56px, 7vw, 96px);
+     --placeholder-gradient: linear-gradient(135deg, #363032 0%, #1f1b1c 55%, #141112 100%);
+   }
+
+
+   * { box-sizing: border-box; }
+   html {
+     scroll-behavior: smooth;
+     overflow-x: hidden;
+   }
+   body {
+     margin: 0;
+     font-family: "Fira Sans", Arial, sans-serif;
+     color: var(--text);
+     background: var(--bg);
+     line-height: 1.5;
+     overflow-x: hidden;
+     /* Notch / home-indicator safe area (iOS) */
+     padding-left: env(safe-area-inset-left, 0);
+     padding-right: env(safe-area-inset-right, 0);
+   }
+
+
+   h1, h2, h3, h4, .futura {
+     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+     letter-spacing: 0.02em;
+     margin: 0 0 16px;
+   }
+
+
+   h1 {
+     font-size: clamp(2.5rem, 6vw, 5rem);
+     line-height: 0.95;
+     text-transform: none;
+   }
+
+
+   h2 {
+     font-size: clamp(1.85rem, 3vw, 3rem);
+     line-height: 1.02;
+     text-transform: none;
+   }
+
+
+   h3 {
+     font-size: 1.1rem;
+     text-transform: none;
+   }
+
+
+   p { margin: 0 0 14px; }
+   a { color: inherit; text-decoration: none; }
+   img { max-width: 100%; display: block; }
+
+
+   .container {
+     width: min(calc(100% - 32px), var(--max));
+     margin: 0 auto;
+     min-width: 0;
+   }
+
+
+   .section {
+     padding: var(--section-pad) 0;
+     position: relative;
+   }
+
+
+   .eyebrow {
+     display: inline-block;
+     width: fit-content;
+     max-width: 100%;
+     padding: 8px 12px;
+     background: rgba(23, 147, 209, 0.1);
+     color: var(--primary);
+     border: 1px solid rgba(23, 147, 209, 0.2);
+     font-weight: 700;
+     text-transform: none;
+     letter-spacing: 0.08em;
+     font-size: 0.76rem;
+     margin-bottom: 18px;
+     transform: skewX(-14deg);
+     box-shadow: 4px 4px 0 rgba(var(--secondary-rgb), 0.14);
+   }
+   .eyebrow span { display: inline-block; transform: skewX(14deg); }
+
+
+   .btn-row {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 14px;
+     margin-top: 26px;
+   }
+
+
+   .btn {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 10px;
+     padding: 15px 22px;
+     border-radius: 16px;
+     font-weight: 700;
+     transition: 0.25s ease;
+     border: 2px solid transparent;
+     cursor: pointer;
+     touch-action: manipulation;
+   }
+
+
+   .btn-primary {
+     background: var(--primary);
+     color: white;
+     box-shadow: var(--shadow-sm);
+   }
+   @media (hover: hover) and (pointer: fine) {
+     .btn-primary:hover { transform: translate(-2px, -2px); }
+   }
+
+
+   .btn-secondary {
+     background: transparent;
+     border-color: var(--secondary);
+     color: var(--secondary);
+   }
+   .btn-secondary:hover {
+     background: var(--secondary);
+     color: white;
+   }
+
+
+   .hero {
+     padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 7vw, 88px);
+     background: linear-gradient(
+       165deg,
+       #cfe8f5 0%,
+       #e0f0f9 28%,
+       #e8f4fb 55%,
+       #dde4ec 100%
+     );
+     border-bottom: 1px solid rgba(23, 147, 209, 0.18);
+     box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.65);
+     overflow: hidden;
+   }
+
+
+   .section-hero-follow {
+     background: linear-gradient(
+       180deg,
+       #fafbfc 0%,
+       #f3f5f8 45%,
+       #ebecef 100%
+     );
+   }
+
+
+   .hero-grid {
+     display: grid;
+     grid-template-columns: minmax(0, 1fr) minmax(220px, min(34vw, 400px));
+     gap: clamp(24px, 3.5vw, 40px);
+     align-items: center;
+     min-width: 0;
+   }
+
+
+   .hero-grid > * {
+     min-width: 0;
+   }
+
+
+   .hero-text {
+     display: flex;
+     flex-direction: column;
+     gap: clamp(18px, 2.5vw, 24px);
+     max-width: min(48rem, 100%);
+   }
+
+
+   .hero .eyebrow {
+     margin-bottom: 0;
+     align-self: flex-start;
+   }
+
+
+   .hero h1 {
+     text-transform: none;
+     font-size: clamp(2.15rem, 4vw + 0.75rem, 3.4rem);
+     line-height: 1.1;
+     letter-spacing: -0.02em;
+     margin: 0;
+     max-width: min(54ch, 100%);
+   }
+
+
+   .hero-lead {
+     font-size: 1.05rem;
+     color: var(--muted);
+     max-width: min(58ch, 100%);
+     margin: 0;
+     line-height: 1.45;
+   }
+
+
+   .hero-points {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 8px;
+     margin-top: 2px;
+     align-items: flex-start;
+     max-width: min(48rem, 100%);
+   }
+
+
+   .hero-point {
+     width: fit-content;
+     max-width: 100%;
+     background: white;
+     border: 1px solid var(--line);
+     padding: 10px 12px;
+     border-radius: 10px;
+     box-shadow: 4px 4px 0 rgba(var(--secondary-rgb), 0.06);
+   }
+
+
+   .hero-point strong {
+     display: block;
+     font-size: 0.72rem;
+     letter-spacing: 0.05em;
+     margin: 0;
+     color: var(--text);
+     line-height: 1.25;
+   }
+
+
+   .hero-visual-wrap {
+     position: relative;
+     display: flex;
+     align-items: center;
+     justify-content: flex-end;
+     min-height: 0;
+   }
+
+
+   .hero-photo {
+     width: 100%;
+     max-width: 400px;
+   }
+
+
+   .hero-photo-inner {
+     position: relative;
+     aspect-ratio: 16 / 9;
+     border-radius: 16px;
+     overflow: hidden;
+     border: 1px solid rgba(var(--secondary-rgb), 0.45);
+     box-shadow:
+       0 4px 24px rgba(0, 0, 0, 0.22),
+       0 12px 40px rgba(0, 0, 0, 0.18);
+     padding: 0;
+     margin: 0;
+   }
+
+
+   .hero-photo-inner img {
+     position: absolute;
+     inset: 0;
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     object-position: center;
+     display: block;
+   }
+
+
+   .grid-3, .grid-4, .grid-2 {
+     display: grid;
+     gap: 22px;
+   }
+   .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+   .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+   .grid-3-stretch { align-items: stretch; }
+   .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+
+   .card {
+     background: var(--surface);
+     border: 1px solid var(--line);
+     border-radius: var(--radius);
+     padding: 24px;
+     box-shadow: var(--shadow-sm);
+     position: relative;
+   }
+
+
+   .card::before {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 72px;
+     height: 8px;
+     background: var(--primary);
+     border-top-left-radius: var(--radius);
+     transform: skewX(-24deg);
+     transform-origin: left;
+   }
+
+
+   .use-case-card {
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+     min-height: 0;
+     padding-top: 28px;
+     padding-bottom: 32px;
+   }
+
+
+   .use-case-card h4 {
+     margin: 0 0 10px;
+     font-size: 0.78rem;
+     font-weight: 700;
+     letter-spacing: 0.08em;
+     text-transform: uppercase;
+     color: var(--muted);
+   }
+
+
+   .use-case-card .list {
+     margin-top: 0;
+     margin-bottom: 0;
+     flex: 1 1 auto;
+   }
+
+
+   .use-cases-intro {
+     margin-top: 10px;
+     max-width: min(100%, 70rem);
+   }
+
+
+   .small-muted,
+   .faq-item p,
+   .step p,
+   .workflow .step .step-points,
+   .trust-card p {
+     color: var(--muted);
+   }
+
+
+   .workflow .step .step-points {
+     margin: 0;
+     padding-left: 1.2em;
+     list-style-position: outside;
+   }
+
+
+   .workflow .step .step-points li {
+     margin: 0;
+     line-height: 1.5;
+   }
+
+
+   .choice-card {
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+     min-height: 0;
+     overflow: hidden;
+     padding-top: 0;
+   }
+
+
+   /* Accent lives in-flow on .choice-top so it never overlaps the heading (skewed .card::before did) */
+   .choice-card.card::before {
+     display: none;
+   }
+
+
+   .choice-top {
+     flex-shrink: 0;
+     margin: -24px -24px 16px;
+     /* Space below the skewed accent bar so the heading never collides with it */
+     padding: 30px 24px 14px 24px;
+     background: linear-gradient(135deg, rgba(23,147,209,0.12), rgba(23,147,209,0.03));
+     border-bottom: 1px solid var(--line);
+     text-align: left;
+     position: relative;
+   }
+
+
+   .choice-top::before {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 72px;
+     height: 8px;
+     background: var(--primary);
+     border-top-left-radius: var(--radius);
+     transform: skewX(-24deg);
+     transform-origin: left;
+     pointer-events: none;
+   }
+
+
+   .choice-top h3 {
+     margin: 0;
+     text-align: left;
+   }
+
+
+   .choice-thumb {
+     width: 100%;
+     aspect-ratio: 1 / 1;
+     border-radius: 12px;
+     overflow: hidden;
+     background: var(--placeholder-gradient);
+     border: 1px solid rgba(var(--secondary-rgb), 0.28);
+     box-shadow: var(--shadow-sm);
+     margin: 0 0 14px;
+   }
+
+
+   .choice-thumb > div {
+     width: 100%;
+     height: 100%;
+     min-height: 0;
+     background-size: cover;
+     background-position: center;
+   }
+
+
+   .choice-card .list {
+     flex: 1 1 auto;
+     margin-bottom: 0;
+   }
+
+
+   .choice-card .btn-row {
+     margin-top: auto;
+     padding-top: 16px;
+   }
+
+
+   /* Make the choice cards visually shorter without affecting other sections */
+   .choice-card .list {
+     margin-top: 0;
+     gap: 8px;
+   }
+
+
+   .solutions-intro {
+     margin-bottom: 26px;
+     max-width: min(100%, 70rem);
+   }
+
+
+   .choice-carousel {
+     position: relative;
+     margin-top: 28px;
+     /* No horizontal padding: arrows are absolutely positioned and must not inset the track (keeps cards aligned with heading). */
+     padding: 0;
+   }
+
+
+   .choice-carousel-viewport {
+     overflow-x: auto;
+     overflow-y: hidden;
+     scroll-behavior: smooth;
+     -webkit-overflow-scrolling: touch;
+     scrollbar-width: thin;
+     min-width: 0;
+     overscroll-behavior-x: contain;
+   }
+
+
+   .choice-carousel-track {
+     display: flex;
+     gap: 22px;
+     align-items: stretch;
+   }
+
+
+   .choice-carousel .choice-card {
+     flex: 0 0 calc((100% - 44px) / 3);
+     min-width: 0;
+   }
+
+
+   .choice-carousel-arrow {
+     position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     z-index: 2;
+     width: 44px;
+     height: 44px;
+     touch-action: manipulation;
+     padding: 0;
+     border-radius: 50%;
+     border: 1px solid var(--line);
+     background: var(--surface);
+     color: var(--secondary);
+     font-size: 1.35rem;
+     line-height: 1;
+     cursor: pointer;
+     box-shadow: var(--shadow-sm);
+     display: grid;
+     place-items: center;
+     transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+   }
+
+
+   .choice-carousel-arrow:hover:not(:disabled) {
+     border-color: rgba(23, 147, 209, 0.35);
+     background: rgba(23, 147, 209, 0.06);
+   }
+
+
+   .choice-carousel-arrow:disabled {
+     opacity: 0.35;
+     cursor: not-allowed;
+   }
+
+
+   .choice-carousel-prev {
+     left: 8px;
+   }
+
+
+   .choice-carousel-next {
+     right: 8px;
+   }
+
+
+   @media (max-width: 880px) {
+     .choice-carousel-viewport {
+       scroll-snap-type: x mandatory;
+     }
+
+
+     .choice-carousel .choice-card {
+       flex: 0 0 100%;
+       max-width: 100%;
+       scroll-snap-align: start;
+     }
+
+
+     /* Full-width cards: buttons sit on top of content; use swipe / scroll-snap instead */
+     .choice-carousel-arrow {
+       display: none;
+     }
+   }
+
+
+   .list {
+     list-style: none;
+     padding: 0;
+     margin: 14px 0 0;
+     display: grid;
+     gap: 10px;
+   }
+
+
+   .list li {
+     position: relative;
+     padding-left: 18px;
+     color: var(--muted);
+   }
+
+
+   .list li::before {
+     content: "";
+     position: absolute;
+     left: 0;
+     top: 10px;
+     width: 8px;
+     height: 8px;
+     background: rgba(var(--secondary-rgb), 0.45);
+     transform: skewX(-20deg);
+   }
+
+
+   .split {
+     display: grid;
+     grid-template-columns: 0.92fr 1.08fr;
+     gap: 28px;
+     align-items: center;
+     min-width: 0;
+   }
+
+
+   .split > * {
+     min-width: 0;
+   }
+
+
+   .video-placeholder {
+     min-height: 360px;
+     border-radius: 22px;
+     border: 2px dashed rgba(var(--secondary-rgb), 0.35);
+     background: var(--placeholder-gradient);
+     display: grid;
+     place-items: center;
+     text-align: center;
+     padding: 28px;
+     box-shadow: var(--shadow-sm);
+     position: relative;
+     overflow: hidden;
+   }
+
+
+   .video-placeholder > div {
+     position: relative;
+     z-index: 1;
+   }
+
+
+   .video-placeholder h3 {
+     margin-bottom: 8px;
+     color: rgba(255, 255, 255, 0.96);
+   }
+
+
+   .video-placeholder .small-muted {
+     color: rgba(255, 255, 255, 0.72);
+   }
+
+
+   .video-placeholder::after {
+     content: "";
+     position: absolute;
+     width: 140px;
+     height: 140px;
+     background: rgba(255, 255, 255, 0.06);
+     transform: skewX(-20deg) rotate(15deg);
+     right: -24px;
+     top: -30px;
+   }
+
+
+   .play {
+     width: 76px;
+     height: 76px;
+     border-radius: 50%;
+     background: rgba(255, 255, 255, 0.12);
+     border: 1px solid rgba(255, 255, 255, 0.35);
+     color: #fff;
+     display: grid;
+     place-items: center;
+     font-size: 1.4rem;
+     margin: 0 auto 16px;
+     box-shadow: none;
+   }
+
+
+   .workflow {
+     background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+   }
+
+
+   .workflow-layout {
+     display: grid;
+     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+     gap: clamp(28px, 4vw, 52px);
+     align-items: center;
+   }
+
+
+   .workflow-copy {
+     max-width: 38rem;
+   }
+
+
+   .workflow-copy .small-muted {
+     margin-bottom: 0;
+     max-width: 42ch;
+   }
+
+
+   .cta-wrap {
+     margin: 0;
+     width: 100%;
+     max-width: none;
+   }
+
+
+   .workflow .step {
+     height: 100%;
+   }
+
+
+   .workflow .step .btn-row {
+     margin-top: 22px;
+   }
+
+
+   .step {
+     position: relative;
+     background: white;
+     border: 1px solid var(--line);
+     border-radius: 20px;
+     padding: 28px 24px;
+     box-shadow: var(--shadow-sm);
+   }
+
+
+   .step-num {
+     width: 52px;
+     height: 52px;
+     display: grid;
+     place-items: center;
+     background: var(--secondary);
+     color: white;
+     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+     font-size: 1.15rem;
+     border-radius: 14px;
+     margin-bottom: 18px;
+     transform: skewX(-12deg);
+   }
+
+
+   .step-num svg {
+     width: 24px;
+     height: 24px;
+     transform: skewX(12deg);
+     display: block;
+   }
+
+
+   .trust-band {
+     background: var(--secondary);
+     color: white;
+   }
+
+
+   .trust-band .eyebrow {
+     background: rgba(255,255,255,0.08);
+     color: #9ed7f2;
+     border-color: rgba(255,255,255,0.08);
+     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+   }
+
+
+   .trust-grid {
+     display: grid;
+     grid-template-columns: repeat(4, minmax(0, 1fr));
+     gap: 18px;
+     margin-top: 28px;
+   }
+
+
+   .trust-card {
+     background: rgba(255,255,255,0.06);
+     border: 1px solid rgba(255,255,255,0.12);
+     border-radius: 18px;
+     padding: 22px;
+     box-shadow: 0 14px 40px rgba(0,0,0,0.22);
+     transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+   }
+
+
+   @media (hover: hover) and (pointer: fine) {
+     .trust-card:hover {
+       transform: translateY(-2px);
+       border-color: rgba(158,215,242,0.35);
+       background: rgba(255,255,255,0.075);
+     }
+   }
+
+
+   .trust-card h3 {
+     margin: 0 0 8px;
+     letter-spacing: -0.01em;
+     font-size: 1.05rem;
+     line-height: 1.15;
+     color: rgba(255,255,255,0.96);
+   }
+
+
+   .trust-card p {
+     margin: 0;
+     line-height: 1.55;
+     font-size: 0.95rem;
+     color: rgba(255,255,255,0.74);
+   }
+   .trust-icon {
+     width: 52px;
+     height: 52px;
+     border-radius: 14px;
+     background: rgba(255, 255, 255, 0.1);
+     border: 1px solid rgba(255, 255, 255, 0.22);
+     display: grid;
+     place-items: center;
+     margin-bottom: 12px;
+     font-size: 1.25rem;
+     color: #fff;
+     font-variant-emoji: text;
+   }
+
+
+   .trust-icon svg {
+     width: 26px;
+     height: 26px;
+     display: block;
+     flex-shrink: 0;
+   }
+
+
+   .faq-wrap {
+     display: grid;
+     gap: 14px;
+     margin-top: 26px;
+   }
+
+
+   .faq-item {
+     background: var(--surface);
+     border: 1px solid rgba(var(--secondary-rgb), 0.22);
+     border-radius: 18px;
+     overflow: hidden;
+     box-shadow: var(--shadow-sm);
+   }
+
+
+   .faq-q {
+     width: 100%;
+     border: 0;
+     background: white;
+     text-align: left;
+     padding: 20px 22px;
+     font: inherit;
+     font-weight: 700;
+     cursor: pointer;
+     display: flex;
+     justify-content: space-between;
+     gap: 14px;
+     align-items: center;
+     touch-action: manipulation;
+     -webkit-tap-highlight-color: transparent;
+   }
+
+
+   .faq-q span:last-child {
+     font-size: 1.3rem;
+     line-height: 1;
+     color: rgba(var(--secondary-rgb), 0.55);
+     font-weight: 700;
+   }
+
+
+   .faq-a {
+     display: none;
+     padding: 0 22px 20px;
+   }
+
+
+   .faq-item.active .faq-a { display: block; }
+
+
+   .faq-help {
+     margin-top: 22px;
+     text-align: right;
+     font-size: 0.95rem;
+     line-height: 1.45;
+     color: var(--muted);
+   }
+
+
+   .faq-help a {
+     color: var(--primary);
+     font-weight: 700;
+     text-decoration: underline;
+     text-underline-offset: 3px;
+   }
+
+
+   .faq-help a:hover {
+     color: var(--secondary);
+   }
+
+
+   @media (max-width: 880px) {
+     .workflow-layout {
+       grid-template-columns: 1fr;
+       gap: 28px;
+     }
+
+
+     .workflow-copy {
+       max-width: none;
+     }
+
+
+     .workflow-copy .small-muted {
+       max-width: none;
+     }
+   }
+
+
+   @media (max-width: 1080px) {
+     .hero-grid,
+     .split,
+     .grid-3,
+     .grid-4,
+     .trust-grid,
+     .grid-2 {
+       grid-template-columns: 1fr 1fr;
+     }
+
+
+     .hero-grid,
+     .split {
+       grid-template-columns: 1fr;
+     }
+
+
+   }
+
+
+   @media (max-width: 720px) {
+     .grid-3,
+     .grid-4,
+     .trust-grid,
+     .grid-2 { grid-template-columns: 1fr; }
+
+
+     .hero-points { flex-direction: column; align-items: stretch; }
+     .hero-text { max-width: none; }
+     .hero-visual-wrap { justify-content: center; }
+     .hero-photo { max-width: 100%; }
+     .btn-row { flex-direction: column; align-items: stretch; }
+     .btn { width: 100%; }
+     .section { padding: 56px 0; }
+
+
+     .card {
+       padding: 20px;
+     }
+
+
+     .choice-top {
+       margin: -20px -20px 14px;
+       padding: 26px 20px 12px;
+     }
+
+
+     .video-placeholder {
+       min-height: 260px;
+     }
+
+
+     .faq-q {
+       padding: 18px 18px;
+       font-size: 0.98rem;
+       align-items: flex-start;
+     }
+
+
+     .faq-a {
+       padding: 0 18px 18px;
+     }
+
+
+     .faq-help {
+       text-align: left;
+     }
+
+
+     h1, h2 {
+       overflow-wrap: break-word;
+     }
+   }
+
+
+   @media (max-width: 480px) {
+     .container {
+       width: min(calc(100% - 20px), var(--max));
+     }
+
+
+     .hero {
+       padding: clamp(28px, 8vw, 48px) 0 clamp(36px, 9vw, 56px);
+     }
+
+
+     .hero h1 {
+       max-width: none;
+     }
+
+
+     .section {
+       padding: 44px 0;
+     }
+
+
+     .step {
+       padding: 22px 18px;
+     }
+
+
+     .trust-card {
+       padding: 18px;
+     }
+
+
+     .eyebrow {
+       font-size: 0.72rem;
+       padding: 7px 10px;
+     }
+   }
+ </style>
+ <script>
+   document.addEventListener("DOMContentLoaded", function () {
+     document.querySelectorAll(".faq-q").forEach(function (btn) {
+       btn.addEventListener("click", function () {
+         var item = btn.closest(".faq-item");
+         var open = item.classList.contains("active");
+         document.querySelectorAll(".faq-item").forEach(function (el) {
+           el.classList.remove("active");
+           el.querySelector(".faq-q").setAttribute("aria-expanded", "false");
+         });
+         if (!open) {
+           item.classList.add("active");
+           btn.setAttribute("aria-expanded", "true");
+         }
+       });
+     });
+
+
+     var choiceViewport = document.getElementById("choiceCarouselViewport");
+     var choicePrev = document.getElementById("choiceCarouselPrev");
+     var choiceNext = document.getElementById("choiceCarouselNext");
+     if (choiceViewport && choicePrev && choiceNext) {
+       var gapPx = 22;
+       function choiceCardStep() {
+         var card = choiceViewport.querySelector(".choice-card");
+         return card ? card.getBoundingClientRect().width + gapPx : 0;
+       }
+       function choiceUpdateArrows() {
+         var max = choiceViewport.scrollWidth - choiceViewport.clientWidth;
+         var sl = choiceViewport.scrollLeft;
+         choicePrev.disabled = sl <= 2;
+         choiceNext.disabled = max <= 2 || sl >= max - 2;
+       }
+       var scrollBehavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+       choicePrev.addEventListener("click", function () {
+         choiceViewport.scrollBy({ left: -choiceCardStep(), behavior: scrollBehavior });
+       });
+       choiceNext.addEventListener("click", function () {
+         choiceViewport.scrollBy({ left: choiceCardStep(), behavior: scrollBehavior });
+       });
+       choiceViewport.addEventListener("scroll", choiceUpdateArrows);
+       window.addEventListener("resize", function () {
+         choiceUpdateArrows();
+       });
+       choiceViewport.addEventListener("keydown", function (e) {
+         if (e.key === "ArrowLeft") {
+           e.preventDefault();
+           choiceViewport.scrollBy({ left: -choiceCardStep(), behavior: scrollBehavior });
+         } else if (e.key === "ArrowRight") {
+           e.preventDefault();
+           choiceViewport.scrollBy({ left: choiceCardStep(), behavior: scrollBehavior });
+         }
+       });
+       requestAnimationFrame(choiceUpdateArrows);
+     }
+   });
+ </script>
+</head>
+<body>
+ <header class="hero">
+   <div class="container">
+     <div class="hero-grid">
+       <div class="hero-copy">
+         <div class="hero-text">
+           <div class="eyebrow"><span>Product overview</span></div>
+           <h1>Ship faster.<br />Stay in sync.</h1>
+           <p class="hero-lead">A placeholder headline for your app—onboarding, collaboration, and reporting in one place. Swap this block for your real value prop.</p>
+           <div class="hero-points">
+             <div class="hero-point">
+               <strong>Quick setup</strong>
+             </div>
+             <div class="hero-point">
+               <strong>Team-ready</strong>
+             </div>
+             <div class="hero-point">
+               <strong>Actionable insights</strong>
+             </div>
+           </div>
+         </div>
+       </div>
+
+
+       <div class="hero-visual-wrap" aria-label="Hero image placeholder">
+         <div class="hero-photo">
+           <div class="hero-photo-inner">
+             <img
+               src="images/hero-placeholder.png"
+               alt="Placeholder hero image: replace with product screenshot or illustration"
+               width="1200"
+               height="675"
+               loading="eager"
+               decoding="async"
+             />
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </header>
+
+
+ <main>
+   <section class="section section-hero-follow">
+     <div class="container">
+       <div class="eyebrow"><span>Use cases</span></div>
+       <p class="small-muted use-cases-intro">
+         Dummy scenarios you can replace. Each card is a pattern: who it’s for, then what the product should deliver, so visitors can self-select before they hit pricing or signup.
+       </p>
+       <div class="grid-3 grid-3-stretch" style="margin-top: 28px;">
+         <article class="card use-case-card">
+           <h3>Day-one wins &amp; quick fixes</h3>
+           <h4>What it does</h4>
+           <ul class="list">
+             <li>Fast time-to-value for new users.</li>
+             <li>Keeps momentum on small teams.</li>
+           </ul>
+         </article>
+         <article class="card use-case-card">
+           <h3>Cross-team workflows</h3>
+           <h4>What it does</h4>
+           <ul class="list">
+             <li>Shared context across roles and time zones.</li>
+             <li>Room to align before deadlines.</li>
+           </ul>
+         </article>
+         <article class="card use-case-card">
+           <h3>Scale &amp; repeatability</h3>
+           <h4>What it does</h4>
+           <ul class="list">
+             <li>Consistent process across many projects.</li>
+             <li>Reporting that holds up at volume.</li>
+           </ul>
+         </article>
+       </div>
+     </div>
+   </section>
+
+
+   <section class="section" id="solutions">
+     <div class="container">
+       <div class="eyebrow"><span>Choose by need</span></div>
+       <h2>Pick the Right Module</h2>
+       <p class="small-muted solutions-intro">
+         Placeholder pillars—rename to match your product areas (plans, add-ons, or feature families).
+       </p>
+
+
+       <div class="choice-carousel" id="choiceCarousel">
+         <button type="button" class="choice-carousel-arrow choice-carousel-prev" id="choiceCarouselPrev" aria-label="Previous options" disabled>&#8249;</button>
+         <div class="choice-carousel-viewport" id="choiceCarouselViewport" tabindex="0" role="region" aria-label="Product option cards">
+           <div class="choice-carousel-track">
+             <article class="card choice-card">
+               <div class="choice-top">
+                 <h3>Self-serve onboarding</h3>
+               </div>
+               <div class="choice-thumb" aria-hidden="true"><div></div></div>
+               <ul class="list">
+                 <li>Guided setup for new accounts</li>
+                 <li>Short path to first success</li>
+                 <li>Ideal for individuals and pilots</li>
+               </ul>
+               <div class="btn-row">
+                 <a class="btn btn-primary" href="#solutions">Learn more</a>
+               </div>
+             </article>
+
+
+             <article class="card choice-card">
+               <div class="choice-top">
+                 <h3>Team workspace</h3>
+               </div>
+               <div class="choice-thumb" aria-hidden="true"><div></div></div>
+               <ul class="list">
+                 <li>Shared projects and permissions</li>
+                 <li>Comments and handoffs in one place</li>
+                 <li>Built for ongoing collaboration</li>
+               </ul>
+               <div class="btn-row">
+                 <a class="btn btn-primary" href="#solutions">Learn more</a>
+               </div>
+             </article>
+
+
+             <article class="card choice-card">
+               <div class="choice-top">
+                 <h3>Automation</h3>
+               </div>
+               <div class="choice-thumb" aria-hidden="true"><div></div></div>
+               <ul class="list">
+                 <li>Rules and triggers you can tune</li>
+                 <li>Fewer manual status updates</li>
+                 <li>Consistent outcomes at scale</li>
+               </ul>
+               <div class="btn-row">
+                 <a class="btn btn-primary" href="#solutions">Learn more</a>
+               </div>
+             </article>
+
+
+             <article class="card choice-card">
+               <div class="choice-top">
+                 <h3>Analytics &amp; reporting</h3>
+               </div>
+               <div class="choice-thumb" aria-hidden="true"><div></div></div>
+               <ul class="list">
+                 <li>Dashboards for leads and managers</li>
+                 <li>Export-friendly summaries</li>
+                 <li>Dummy metrics until you wire real data</li>
+               </ul>
+               <div class="btn-row">
+                 <a class="btn btn-primary" href="#solutions">Learn more</a>
+               </div>
+             </article>
+
+
+             <article class="card choice-card">
+               <div class="choice-top">
+                 <h3>Integrations &amp; API</h3>
+               </div>
+               <div class="choice-thumb" aria-hidden="true"><div></div></div>
+               <ul class="list">
+                 <li>Connect Slack, email, or your stack—swap names to match your roadmap.</li>
+               </ul>
+               <div class="btn-row">
+                 <a class="btn btn-primary" href="#solutions">Learn more</a>
+               </div>
+             </article>
+           </div>
+         </div>
+         <button type="button" class="choice-carousel-arrow choice-carousel-next" id="choiceCarouselNext" aria-label="Next options">&#8250;</button>
+       </div>
+     </div>
+   </section>
+
+
+   <section class="section">
+     <div class="container split">
+       <div>
+         <div class="eyebrow"><span>Product demo</span></div>
+         <h2>Show the journey, not just the feature list</h2>
+         <p class="small-muted">
+           Placeholder for a product tour or screen recording. Until then, it’s a visual break between sections.
+         </p>
+         <ul class="list">
+           <li>Drop in a 60–90 second walkthrough</li>
+           <li>Show signup → core task → outcome</li>
+           <li>Helps paid traffic validate fit quickly</li>
+         </ul>
+       </div>
+       <div class="video-placeholder">
+         <div>
+           <div class="play">▶</div>
+           <h3>Video Placeholder</h3>
+           <p class="small-muted" style="max-width: 32ch; margin: 0 auto;">
+             Replace with a short process video or demo.
+           </p>
+         </div>
+       </div>
+     </div>
+   </section>
+
+
+   <section class="section workflow">
+     <div class="container">
+       <div class="workflow-layout">
+         <div class="workflow-copy">
+           <div class="eyebrow"><span>Still Deciding?</span></div>
+           <h2>Still Not Sure? Contact Us Directly</h2>
+           <p class="small-muted">
+             Dummy contact block—replace with your real sales or success story. We’ll help map your workflow and rollout—by phone or email, whichever works for you.
+           </p>
+         </div>
+         <div class="cta-wrap">
+           <article class="step">
+             <div class="step-num" aria-hidden="true">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false">
+                 <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-1.38C9.57 21.5 1.5 13.43 1.5 4.5Z" clip-rule="evenodd" />
+               </svg>
+             </div>
+             <h3>Talk with our team</h3>
+             <ul class="step-points">
+               <li>Share your goals and stack—we’ll suggest a starting plan or pilot (phone or email).</li>
+             </ul>
+             <div class="btn-row">
+               <a class="btn btn-primary" href="tel:+18005550199" aria-label="Call us at (800) 555-0199">Call (800) 555-0199</a>
+               <a class="btn btn-secondary" href="mailto:hello@example.com" aria-label="Email hello at example.com">Email hello@example.com</a>
+             </div>
+           </article>
+         </div>
+       </div>
+     </div>
+   </section>
+
+
+   <section class="section trust-band">
+     <div class="container">
+       <div class="eyebrow"><span>Trust &amp; proof</span></div>
+       <h2>Why teams use a template like this</h2>
+       <div class="trust-grid">
+         <article class="trust-card">
+           <div class="trust-icon" aria-hidden="true">
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" focusable="false">
+               <path d="M12 2c-1.8 3.2-5 5.5-5 10.5 0 2.2.8 4.1 2.2 5.5H11v-1.2c0-2.3 1.9-4.1 4.2-4.1 2.2 0 4 1.7 4.1 3.9l.1 1.4h1.6c1.4-1.4 2.2-3.3 2.2-5.5 0-5-3.2-7.3-5-10.5z" />
+             </svg>
+           </div>
+           <h3>Global-ready</h3>
+           <p>Placeholder: add your regions, data residency, or certifications here.</p>
+         </article>
+         <article class="trust-card">
+           <div class="trust-icon" aria-hidden="true">&#9670;</div>
+           <h3>Clear choices</h3>
+           <p>Section structure nudges visitors from problem → modules → proof → FAQ.</p>
+         </article>
+         <article class="trust-card">
+           <div class="trust-icon" aria-hidden="true">&#x2699;&#xFE0E;</div>
+           <h3>Production-minded</h3>
+           <p>Copy blocks are sized for real headlines—swap text, keep the layout.</p>
+         </article>
+         <article class="trust-card">
+           <div class="trust-icon" aria-hidden="true">&#8594;</div>
+           <h3>Room to scale</h3>
+           <p>Start with a pilot, add seats and features as adoption grows.</p>
+         </article>
+       </div>
+     </div>
+   </section>
+
+
+   <section class="section" id="faq">
+     <div class="container">
+       <div class="eyebrow"><span>FAQ</span></div>
+       <h2>Common Questions</h2>
+       <p class="small-muted" style="max-width: 72ch; margin-bottom: 0;">
+         Generic FAQ patterns—replace with objections you hear from real prospects. Tap to expand.
+       </p>
+       <div class="faq-wrap">
+         <div class="faq-item">
+           <button type="button" class="faq-q" aria-expanded="false">
+             <span>How do I pick between modules or plans?</span>
+             <span aria-hidden="true">+</span>
+           </button>
+           <div class="faq-a">
+             <p>
+               Start with your team size and must-have integrations. Smaller groups often begin with self-serve onboarding; growing orgs add team workspace and automation. Not sure? Use the cards above as a conversation guide.
+             </p>
+           </div>
+         </div>
+         <div class="faq-item">
+           <button type="button" class="faq-q" aria-expanded="false">
+             <span>Does it work with our existing tools?</span>
+             <span aria-hidden="true">+</span>
+           </button>
+           <div class="faq-a">
+             <p>
+               List your real integrations on the live site. This template assumes API and common SaaS connectors—validate against your roadmap before launch.
+             </p>
+           </div>
+         </div>
+         <div class="faq-item">
+           <button type="button" class="faq-q" aria-expanded="false">
+             <span>Do you offer volume or repeat ordering?</span>
+             <span aria-hidden="true">+</span>
+           </button>
+           <div class="faq-a">
+             <p>
+               Yes. Production-oriented options are available for regular reorders. Ask your rep about recurring supply if needed.
+             </p>
+           </div>
+         </div>
+         <div class="faq-item">
+           <button type="button" class="faq-q" aria-expanded="false">
+             <span>What if I need help picking a product?</span>
+             <span aria-hidden="true">+</span>
+           </button>
+           <div class="faq-a">
+             <p>
+               Use the solutions section to narrow options, then confirm pricing and rollout with sales. For unusual requirements (compliance, data residency, custom SSO), contact us with your constraints.
+             </p>
+           </div>
+         </div>
+       </div>
+       <p class="faq-help">
+         <a href="/contact" aria-label="Contact customer service">Still questions? Talk to our expert!</a>
+       </p>
+     </div>
+   </section>
+ </main>
+</body>
+</html>
+
